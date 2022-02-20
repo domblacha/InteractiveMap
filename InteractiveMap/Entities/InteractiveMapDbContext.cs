@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InteractiveMap.Entities
 {
@@ -17,6 +12,11 @@ namespace InteractiveMap.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany(c => c.Comments)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
             modelBuilder.Entity<User>()
                 .Property(u => u.FirstName)
                 .IsRequired()
@@ -45,6 +45,7 @@ namespace InteractiveMap.Entities
                 .HasMaxLength(255)
                 .IsRequired();
 
+                    
             modelBuilder.Entity<Comment>()
                 .Property(c => c.Content)
                 .IsRequired();
