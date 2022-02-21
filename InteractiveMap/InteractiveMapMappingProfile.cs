@@ -23,6 +23,7 @@ namespace InteractiveMap
             CreateMap<User, UserDto>()
                  .ForMember(d => d.UserId, c => c.MapFrom(r => r.Id));
 
+            CreateMap<CreateMarkerDto, Marker>();
         }
     }
 }

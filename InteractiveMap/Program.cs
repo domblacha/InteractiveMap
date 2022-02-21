@@ -1,5 +1,6 @@
 using InteractiveMap;
 using InteractiveMap.Entities;
+using InteractiveMap.Middleware;
 using InteractiveMap.Services;
 using System.Reflection;
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<InteractiveMapDbContext>();
 builder.Services.AddScoped<MapSeeder>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IMarkerService, MarkerService>();
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -27,6 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
